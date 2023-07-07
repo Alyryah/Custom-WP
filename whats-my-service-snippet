@@ -1,0 +1,126 @@
+/*-------------------------------------------Edit Section --> Custom CSS --------------------------------------------------*/
+
+selector{
+    --transition: 0.3s;
+}
+selector .elementor-widget-icon-box,
+selector .elementor-widget-icon{
+    cursor: pointer;
+}
+selector .elementor-widget-icon-box .elementor-icon-box-title,
+selector .elementor-widget-icon-box .elementor-icon{
+    transition: all var(--transition) ease-in-out;
+}
+selector .elementor-widget-icon-box .elementor-widget-container{
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+selector .elementor-widget-icon-box .elementor-icon-box-icon{
+    display: inherit;
+}
+selector .elementor-widget-icon-box .elementor-icon-box-content{
+    display: flex;
+    align-items: center;
+}
+selector .elementor-widget-icon-box .elementor-icon{
+  background: currentColor;
+  padding: 13px;
+  border-right: 1px solid #000!Important;
+}
+selector .elementor-widget-icon-box i{
+  color: #000;
+  -webkit-text-stroke-color: #000;
+  transition: all var(--transition) ease-in-out;
+}
+selector .elementor-widget-icon-box.active .elementor-icon{
+  background: #000;
+}
+selector .elementor-widget-icon-box.active .elementor-icon i{
+  color: currentColor;
+  -webkit-text-stroke-color: currentColor; 
+}
+selector .elementor-widget-icon-box .elementor-icon:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    z-index: -1;
+    transition: all var(--transition) ease-in-out;
+}
+selector .elementor-widget-icon-box.active .elementor-icon:after{
+    background: currentColor;
+}
+
+
+/*-------------------------------------------Left arrow snippet (custom css) --------------------------------------------------*/
+selector .elementor-swiper-button{
+    visibility: hidden;
+}
+selector .swiper-pagination{
+    visibility: hidden;
+}
+
+/*--------------------------------------------Right arrow snippet (custom css) --------------------------------------------------*/
+selector .elementor-swiper-button{
+    visibility: hidden;
+}
+selector .swiper-pagination{
+    visibility: hidden;
+}
+
+
+/*-------------------------------------------- HTML -> javascript snippet --------------------------------------------------*/
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+var $ = jQuery
+    
+$(document).ready(function(){
+
+var className = 'my-slider'
+
+$('.' + className).each(function(){
+    
+$(this).find('.elementor-widget-icon-box').on('click', function(){
+    var index = $(this).index() - $(this).parent().children('.elementor-widget-icon-box').eq(0).index()
+    
+    $(this).parent().find('.elementor-widget-icon-box').removeClass('active')
+    $(this).addClass('active')
+    
+    $(this).closest('.' + className).find('.swiper-pagination-bullet').eq(index).trigger('click')
+    
+    $(this).closest('.' + className).find('.swiper-container').trigger('mouseleave')
+    if( $(window).width() < 1025 ) {
+        $('html, body').animate({ scrollTop: $(this).closest('.' + className).find('.elementor-widget-slides').offset().top }, 100)
+    }
+})
+
+
+$(this).find('.my-slider-prev').on('click', function(){
+    $(this).closest('.' + className).find('.elementor-swiper-button-prev').trigger('click')
+    
+    $(this).closest('.' + className).find('.swiper-container').trigger('mouseleave')
+})
+
+$(this).find('.my-slider-next').on('click', function(){
+    $(this).closest('.' + className).find('.elementor-swiper-button-next').trigger('click')
+    
+    $(this).closest('.' + className).find('.swiper-container').trigger('mouseleave')
+})
+
+var $this = $(this)
+
+setInterval(function(){
+    var index = $this.find('.swiper-slide-active').attr('data-swiper-slide-index')
+    $this.find('.elementor-widget-icon-box').removeClass('active')
+    $this.find('.elementor-widget-icon-box').eq(index).addClass('active')
+},250)
+
+
+})
+})
+</script>
